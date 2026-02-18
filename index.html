@@ -171,6 +171,13 @@
       color: rgba(234,240,255,.4);
       letter-spacing:.04em;
     }
+    .dose-for{
+      margin:0;
+      font-size:15px;
+      font-weight:500;
+      color: var(--c2);
+      letter-spacing:.02em;
+    }
     .dose-text{
       margin:0;
       font-size:26px;
@@ -326,12 +333,14 @@
     <!-- Dose view -->
     <div id="dose-view">
       <p class="dose-sub">State-shifting micro-texts. No dread, no scary.</p>
+      <p class="dose-for" id="doseFor" hidden></p>
       <p class="dose-text" id="doseText"></p>
       <div class="dose-meta" id="doseMeta"></div>
       <div class="dose-actions">
         <button class="btn primary" id="nextBtn" type="button">Next</button>
         <button class="btn" id="copyBtn" type="button">Copy</button>
         <button class="btn good" id="shareBtn" type="button">Share</button>
+        <button class="btn" id="doseBtn" type="button">Dose someone</button>
       </div>
       <button class="change-mood" id="changeMoodBtn" type="button">Pick a mood</button>
       <div class="kbd-hints">
@@ -531,10 +540,12 @@
     let activeMood = null;
     let currentDose = null;
     let lastDoseId = null;
+    let forName = null;
 
     /* DOM refs */
     const $moodSelect = document.getElementById("mood-select");
     const $doseView = document.getElementById("dose-view");
+    const $doseFor = document.getElementById("doseFor");
     const $doseText = document.getElementById("doseText");
     const $doseMeta = document.getElementById("doseMeta");
     const $toast = document.getElementById("toast");
@@ -623,6 +634,13 @@
       $doseView.offsetHeight;
       $doseView.style.animation = "";
 
+      if(forName){
+        $doseFor.textContent = `${forName}, this one\u2019s for you`;
+        $doseFor.hidden = false;
+      } else {
+        $doseFor.hidden = true;
+      }
+
       $doseText.textContent = `\u201C${dose.text}\u201D`;
 
       const tagBits = [
@@ -640,6 +658,7 @@
     }
 
     function nextDose(){
+      forName = null;
       if(!activeMood) activeMood = "All";
       showRandomDose(activeMood);
     }
@@ -661,6 +680,17 @@
       copyToClipboard(isWeb ? `${text}\n${location.href}` : text);
     }
 
+    function doseSomeone(){
+      if(!currentDose) return;
+      const name = prompt("Who's this dose for?");
+      if(!name || !name.trim()) return;
+      const clean = name.trim();
+      const base = location.href.split("#")[0];
+      const url = `${base}#/for/${encodeURIComponent(clean)}/${currentDose.id}`;
+      copyToClipboard(url);
+      toast("Link copied — send it!");
+    }
+
     /* Event wiring */
     document.querySelectorAll(".mood-btn").forEach(btn => {
       btn.addEventListener("click", () => selectMood(btn.dataset.mood));
@@ -671,6 +701,7 @@
       if(currentDose) copyToClipboard(currentDose.text);
     });
     document.getElementById("shareBtn").addEventListener("click", shareDose);
+    document.getElementById("doseBtn").addEventListener("click", doseSomeone);
     document.getElementById("changeMoodBtn").addEventListener("click", showMoodSelector);
 
     document.querySelector(".brand").addEventListener("click", (e) => {
@@ -703,10 +734,25 @@
     function applyRoute(){
       const h = (location.hash || "#/").slice(1);
 
+      // #/for/Name/dose-id — personalized dose link
+      const forMatch = h.match(/^\/for\/([^/]+)\/(.+)$/);
+      if(forMatch){
+        const name = decodeURIComponent(forMatch[1]);
+        const id = forMatch[2];
+        const dose = DOSES.find(x => x.id === id);
+        if(dose){
+          forName = name;
+          activeMood = dose.cat;
+          showDose(dose);
+          return;
+        }
+      }
+
       if(h.startsWith("/dose/")){
         const id = h.split("/dose/")[1];
         const dose = DOSES.find(x => x.id === id);
         if(dose){
+          forName = null;
           activeMood = dose.cat;
           showDose(dose);
           return;
@@ -714,6 +760,7 @@
       }
 
       // Auto-show a random dose on first load
+      forName = null;
       activeMood = "All";
       showRandomDose("All");
     }
