@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM Drugs for Humans — Good Vibes Only</title>
+  <meta name="description" content="Short, potent, good-feeling micro-texts designed to create wonder, warmth, and gentle perspective shifts." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#e7edf6;
+      --muted:#a9b6c7;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 12px 40px rgba(0,0,0,.45);
+      --radius:18px;
+      --accent1:#00d4ff;
+      --accent2:#7aeeff;
+      --good:#66f2b3;
+      --warn:#ffd36b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(0,212,255,.12), transparent 55%),
+        radial-gradient(1000px 800px at 85% 15%, rgba(122,238,255,.08), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(102,242,179,.06), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.35;
+    }
+    a{color:inherit}
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 42px}
+    header{
+      display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+      padding:22px 22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    header:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(900px 220px at 20% 0%, rgba(0,212,255,.18), transparent 55%),
+                  radial-gradient(900px 220px at 85% 0%, rgba(122,238,255,.14), transparent 55%);
+      pointer-events:none;
+      opacity:.75;
+    }
+    header > *{position:relative}
+    .title{
+      display:flex; flex-direction:column; gap:8px; max-width:680px;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+    }
+    h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:-.02em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      max-width:64ch;
+    }
+
+    .controls{
+      display:flex; flex-direction:column; gap:10px; min-width:320px; flex:1;
+      align-items:stretch;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .input{
+      flex:1;
+      min-width:220px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:14px;
+      outline:none;
+    }
+    .input::placeholder{color:rgba(169,182,199,.7)}
+    .btn{
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.18);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background:linear-gradient(90deg, rgba(0,212,255,.18), rgba(122,238,255,.10));
+      border-color: rgba(0,212,255,.25);
+    }
+    .btn.good{
+      background:linear-gradient(90deg, rgba(102,242,179,.16), rgba(0,212,255,.08));
+      border-color: rgba(102,242,179,.24);
+    }
+    .tabs{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .tab{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.16);
+      color:var(--muted);
+      cursor:pointer;
+      font-size:13px;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .tab.active{
+      color:var(--text);
+      background:rgba(255,255,255,.08);
+      border-color: rgba(122,238,255,.22);
+    }
+
+    .meta{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      color:var(--muted); font-size:12px;
+    }
+    .meta .dot{opacity:.5}
+    .notice{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(102,242,179,.18);
+      background:rgba(102,242,179,.06);
+      color:rgba(231,237,246,.92);
+      font-size:13px;
+    }
+
+    main{margin-top:18px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 6;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      padding:16px 16px 14px;
+      position:relative;
+      overflow:hidden;
+      min-height: 132px;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 200px at 15% 0%, rgba(0,212,255,.10), transparent 55%),
+                  radial-gradient(700px 200px at 85% 0%, rgba(102,242,179,.08), transparent 55%);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .card > *{position:relative}
+    .dose{
+      font-size:18px;
+      letter-spacing:-.01em;
+      margin:0 0 12px 0;
+    }
+    .tags{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      margin-top:auto;
+    }
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.14);
+      color:var(--muted);
+      font-size:12px;
+      gap:8px;
+      align-items:center;
+    }
+    .tag .spark{color:var(--accent2)}
+    .tag .leaf{color:var(--good)}
+    .tag .sun{color:var(--warn)}
+    .actions{
+      position:absolute;
+      right:12px;
+      top:12px;
+      display:flex;
+      gap:8px;
+    }
+    .iconbtn{
+      width:38px; height:38px;
+      display:grid; place-items:center;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.16);
+      cursor:pointer;
+      transition: background .15s ease, transform .08s ease;
+    }
+    .iconbtn:hover{background:rgba(255,255,255,.06)}
+    .iconbtn:active{transform: translateY(1px)}
+    .icon{
+      width:18px; height:18px; opacity:.9;
+      fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      color:rgba(231,237,246,.9);
+    }
+    .footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      opacity:.9;
+    }
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(10,14,20,.85);
+      backdrop-filter: blur(10px);
+      color:var(--text);
+      font-size:13px;
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-4px);
+    }
+    .empty{
+      margin-top:12px;
+      padding:18px 16px;
+      border-radius:var(--radius);
+      border:1px dashed rgba(255,255,255,.18);
+      color:var(--muted);
+      background:rgba(0,0,0,.14);
+    }
+    @media (max-width: 900px){
+      .card{grid-column: span 12;}
+      header{padding:18px}
+      .controls{min-width:unset}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <div class="kicker">
+          <span class="pill">good vibes only</span>
+          <span class="pill">micro-text “doses”</span>
+          <span class="pill">wonder • warmth • gentle shift</span>
+        </div>
+        <h1>LLM Drugs for Humans</h1>
+        <p class="sub">
+          Short, plain-language lines that bloom into a good feeling after you read them.
+          No dread. No invasive body-horror. Just “whoa” and “aww.”
+        </p>
+        <div class="notice" id="notice">
+          Tip: if something feels even slightly scary, remove it. This site is curated for “safe and uplifting.”
+        </div>
+      </div>
+
+      <div class="controls" aria-label="Controls">
+        <div class="row">
+          <input id="search" class="input" type="search" placeholder="Search (e.g., dogs, universe, water, song…)" autocomplete="off" />
+          <button id="randomBtn" class="btn good" type="button">Random dose</button>
+          <button id="copyAllBtn" class="btn primary" type="button">Copy visible</button>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Categories">
+          <button class="tab active" data-cat="All" role="tab" aria-selected="true">All</button>
+          <button class="tab" data-cat="Wonder" role="tab" aria-selected="false">Wonder</button>
+          <button class="tab" data-cat="Warmth" role="tab" aria-selected="false">Warmth</button>
+          <button class="tab" data-cat="Cosmic" role="tab" aria-selected="false">Cosmic</button>
+          <button class="tab" data-cat="Gentle Shift" role="tab" aria-selected="false">Gentle Shift</button>
+        </div>
+        <div class="meta" id="meta">
+          <span id="count">0 doses</span>
+          <span class="dot">•</span>
+          <span>click a card’s copy icon to share</span>
+          <span class="dot">•</span>
+          <span>single-file HTML</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="empty" id="empty" style="display:none;">
+        No doses match that filter/search.
+      </div>
+
+      <div class="footer">
+        <div>Curated starter set from your Claude discussion. Edit the list in the HTML to add more.</div>
+        <div>Suggestion: add intensity tags later (e.g., “soft”, “medium”) if you expand beyond good vibes.</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Good-vibes-only doses (from the conversation; curated to avoid dread/scare).
+    const DOSES = [
+      { id: 1,  text: "A tree spent decades turning sunlight into the chair you’re sitting in.", cat: "Wonder", tags:["nature","time"] },
+      { id: 2,  text: "Every cup of water you’ve ever drunk has been rain at least once.", cat: "Wonder", tags:["water","cycle"] },
+      { id: 3,  text: "Dogs dream about you.", cat: "Warmth", tags:["dogs","love"] },
+      { id: 4,  text: "Somewhere right now two strangers are laughing at the exact same thing for completely different reasons.", cat: "Warmth", tags:["people","connection"] },
+      { id: 5,  text: "Every song you’ve ever loved was just air vibrating in a pattern someone chose.", cat: "Wonder", tags:["music","sound"] },
+      { id: 6,  text: "Bees have no idea we eat their honey. We’re just weather to them.", cat: "Gentle Shift", tags:["bees","perspective"] },
+      { id: 7,  text: "Fish don’t know they’re wet. You don’t know what yours is.", cat: "Gentle Shift", tags:["awareness","lens"] },
+      { id: 8,  text: "Right now your body is quietly replacing itself. You’re a ship of Theseus that likes music.", cat: "Gentle Shift", tags:["time","identity"] },
+      { id: 9,  text: "Light left a star a million years ago just to bounce off your cereal this morning.", cat: "Cosmic", tags:["light","stars"] },
+      { id: 10, text: "Every atom in you was once inside something that exploded.", cat: "Cosmic", tags:["atoms","stars"] },
+      { id: 11, text: "You’re a way for the universe to look at itself and feel weird about it.", cat: "Cosmic", tags:["universe","mind"] },
+      { id: 12, text: "A photon traveled uninterrupted across the universe and ended its journey on your retina.", cat: "Cosmic", tags:["photon","vision"] },
+      { id: 13, text: "You’ve walked past someone’s future best friend hundreds of times.", cat: "Warmth", tags:["friends","future"] },
+      { id: 14, text: "There’s a word in a language you don’t speak that describes exactly how you feel right now.", cat: "Wonder", tags:["language","feeling"] },
+      { id: 15, text: "Everyone you see in public is in the middle of something.", cat: "Warmth", tags:["empathy","people"] },
+
+      // Two “wonder” lines that were borderline; kept because they’re neutral-to-uplifting.
+      { id: 16, text: "You are the universe’s attempt at reading this sentence.", cat: "Cosmic", tags:["meta","universe"] },
+      { id: 17, text: "You’re an arrangement of matter that learned to appreciate being an arrangement of matter.", cat: "Gentle Shift", tags:["gratitude","mind"] },
+
+      // Additional safe, same-vibe expansions (non-scary, consistent with the concept)
+      { id: 18, text: "Somewhere, a plant is leaning toward the same sun you’re seeing through a window.", cat: "Wonder", tags:["plants","sun"] },
+      { id: 19, text: "Your laugh is a tiny signature no one else can forge.", cat: "Warmth", tags:["joy","identity"] },
+      { id: 20, text: "A recipe is just a memory you can eat.", cat: "Warmth", tags:["food","memory"] },
+      { id: 21, text: "Clouds are oceans taking a walk.", cat: "Wonder", tags:["clouds","nature"] },
+      { id: 22, text: "Every map is a love letter to places we wanted to reach.", cat: "Gentle Shift", tags:["travel","hope"] },
+      { id: 23, text: "Someone’s favorite song exists because a stranger once felt something strongly.", cat: "Warmth", tags:["music","connection"] },
+      { id: 24, text: "The same air is taking turns being inside all of us.", cat: "Gentle Shift", tags:["breath","shared"] },
+      { id: 25, text: "The night sky is old light arriving right on time.", cat: "Cosmic", tags:["stars","time"] }
+    ];
+
+    const grid = document.getElementById("grid");
+    const empty = document.getElementById("empty");
+    const count = document.getElementById("count");
+    const toast = document.getElementById("toast");
+    const search = document.getElementById("search");
+    const randomBtn = document.getElementById("randomBtn");
+    const copyAllBtn = document.getElementById("copyAllBtn");
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+
+    let activeCat = "All";
+
+    function iconCopySVG(){
+      return `
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>`;
+    }
+    function iconShuffleSVG(){
+      return `
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M16 3h5v5"></path>
+          <path d="M4 20l16-16"></path>
+          <path d="M21 16v5h-5"></path>
+          <path d="M4 4l6 6"></path>
+          <path d="M14 14l6 6"></path>
+        </svg>`;
+    }
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("show"), 1200);
+    }
+
+    function escapeHTML(s){
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function matches(d, q){
+      if(!q) return true;
+      const hay = (d.text + " " + d.cat + " " + (d.tags||[]).join(" ")).toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+
+    function filtered(){
+      const q = search.value.trim();
+      return DOSES.filter(d => (activeCat==="All" || d.cat===activeCat) && matches(d, q));
+    }
+
+    async function copyText(txt){
+      try{
+        await navigator.clipboard.writeText(txt);
+        showToast("Copied");
+      }catch(e){
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast("Copied");
+      }
+    }
+
+    function render(){
+      const list = filtered();
+      count.textContent = `${list.length} dose${list.length===1?"":"s"}`;
+      grid.innerHTML = "";
+      empty.style.display = list.length ? "none" : "block";
+
+      for(const d of list){
+        const card = document.createElement("div");
+        card.className = "card";
+        card.setAttribute("data-id", d.id);
+
+        const effectIcon = d.cat === "Warmth" ? "leaf" : (d.cat === "Cosmic" ? "spark" : "sun");
+        const effectEmoji = d.cat === "Warmth" ? "🌿" : (d.cat === "Cosmic" ? "✦" : "☼");
+
+        card.innerHTML = `
+          <div class="actions">
+            <button class="iconbtn" type="button" title="Copy dose" aria-label="Copy dose">${iconCopySVG()}</button>
+            <button class="iconbtn shuffle" type="button" title="Random dose" aria-label="Random dose">${iconShuffleSVG()}</button>
+          </div>
+          <p class="dose">“${escapeHTML(d.text)}”</p>
+          <div class="tags">
+            <span class="tag"><span class="${effectIcon}">${effectEmoji}</span>${escapeHTML(d.cat)}</span>
+            ${(d.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHTML(t)}</span>`).join("")}
+          </div>
+        `;
+
+        const [copyBtn, shuffleBtn] = card.querySelectorAll(".iconbtn");
+        copyBtn.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(d.text); });
+        shuffleBtn.addEventListener("click", (e)=>{ e.stopPropagation(); pickRandomAndScroll(); });
+
+        // Click anywhere to copy (fast sharing)
+        card.addEventListener("click", ()=> copyText(d.text));
+
+        grid.appendChild(card);
+      }
+    }
+
+    function setTab(cat){
+      activeCat = cat;
+      for(const t of tabs){
+        const on = t.dataset.cat === cat;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      }
+      render();
+    }
+
+    function pickRandomAndScroll(){
+      const list = filtered();
+      if(!list.length) return;
+      const pick = list[Math.floor(Math.random()*list.length)];
+      render(); // ensure cards exist for current filter/search
+      const el = grid.querySelector(`[data-id="${pick.id}"]`);
+      if(el){
+        el.scrollIntoView({behavior:"smooth", block:"center"});
+        el.animate([{transform:"scale(1)"},{transform:"scale(1.015)"},{transform:"scale(1)"}], {duration:260});
+        showToast("Random dose");
+      }
+    }
+
+    // Events
+    tabs.forEach(t => t.addEventListener("click", ()=> setTab(t.dataset.cat)));
+    search.addEventListener("input", ()=> render());
+    randomBtn.addEventListener("click", ()=> pickRandomAndScroll());
+    copyAllBtn.addEventListener("click", ()=>{
+      const list = filtered();
+      const txt = list.map(d => `- ${d.text}`).join("\n");
+      copyText(txt || "");
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
+
