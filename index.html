@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Human Doses — good-vibe "LLM drugs" for humans</title>
+  <title>Small Spells — LLM Drugs for Humans</title>
   <meta name="description" content="A curated, good-vibes-only collection of micro-texts engineered for wonder, warmth, and gentle perspective shifts. Static site. No server." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Human Doses — good-vibe LLM drugs for humans" />
+  <meta property="og:title" content="Small Spells — LLM Drugs for Humans" />
   <meta property="og:description" content="Micro-texts designed to create outsized wonder + warmth. No dread. Static site." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="og.png" />
@@ -291,7 +291,7 @@
   <header>
     <a class="brand" href="#/" title="Home">
       <div class="logo" aria-hidden="true"></div>
-      <span class="brand-name">Human Doses</span>
+      <span class="brand-name">Small Spells</span>
     </a>
   </header>
 
@@ -635,7 +635,7 @@
       const isWeb = location.protocol.startsWith("http");
 
       if(navigator.share){
-        const payload = { title:"Human Doses", text };
+        const payload = { title:"Small Spells", text };
         if(isWeb) payload.url = location.href;
         navigator.share(payload)
           .then(()=> toast("Shared"))
