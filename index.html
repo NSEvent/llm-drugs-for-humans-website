@@ -1,504 +1,1018 @@
-<!doctype html>
+property="og:image" content="https://example.com/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#070A10;
+      --bg1:#0A0F19;
+      --border: rgba(255,255,255,.10);
+      --text: #EAF0FF;
+      --muted: rgba(234,240,255,.68);
+
+      --c1:#00D4FF;
+      --c2:#7AEEFF;
+      --c3:#66F2B3;
+      --c4:#FFD36B;
+
+      --r16: 16px;
+      --r20: 20px;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LLM Drugs for Humans — Good Vibes Only</title>
-  <meta name="description" content="Short, potent, good-feeling micro-texts designed to create wonder, warmth, and gentle perspective shifts." />
-  <style>
-    :root{
-      --bg:#0b0f14;
-      --panel:#0f1620;
-      --panel2:#0c121a;
-      --text:#e7edf6;
-      --muted:#a9b6c7;
-      --border:rgba(255,255,255,.08);
-      --shadow: 0 12px 40px rgba(0,0,0,.45);
-      --radius:18px;
-      --accent1:#00d4ff;
-      --accent2:#7aeeff;
-      --good:#66f2b3;
-      --warn:#ffd36b;
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Human Doses — good-vibe “LLM drugs” for humans</title>
+  <meta name="description" content="A curated, good-vibes-only collection of micro-texts engineered for wonder, warmth, and gentle perspective shifts. Static site. No server." />
+
+  <!-- Open Graph (edit og:url after deploy) -->
+  <meta property="og:title" content="Human Doses — good-vibe “LLM drugs” for humans" />
+  <meta property="og:description" content="Micro-texts designed to create outsized wonder + warmth. No dread. Static site." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com" />
+  <meta 2: 0 12px 30px rgba(0,0,0,.35);
+      --max: 1180px;
+
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: var(--sans);
+      color: var(--text);
       background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(0,212,255,.12), transparent 55%),
-        radial-gradient(1000px 800px at 85% 15%, rgba(122,238,255,.08), transparent 55%),
-        radial-gradient(900px 700px at 50% 90%, rgba(102,242,179,.06), transparent 55%),
-        var(--bg);
-      color:var(--text);
-      line-height:1.35;
+        radial-gradient(1200px 800px at 20% 10%, rgba(0,212,255,.16), transparent 55%),
+        radial-gradient(900px 700px at 85% 15%, rgba(122,238,255,.12), transparent 55%),
+        radial-gradient(1000px 800px at 55% 85%, rgba(102,242,179,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
-    a{color:inherit}
-    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 42px}
-    header{
-      display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
-      padding:22px 22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
+    #bg{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:-1;
+      opacity:.85;
     }
-    header:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(900px 220px at 20% 0%, rgba(0,212,255,.18), transparent 55%),
-                  radial-gradient(900px 220px at 85% 0%, rgba(122,238,255,.14), transparent 55%);
-      pointer-events:none;
-      opacity:.75;
-    }
-    header > *{position:relative}
-    .title{
-      display:flex; flex-direction:column; gap:8px; max-width:680px;
-    }
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px 18px 54px}
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px;
       border:1px solid var(--border);
       border-radius:999px;
-      background:rgba(0,0,0,.18);
-      color:var(--muted);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow2);
+      position: sticky;
+      top: 12px;
+      z-index: 5;
     }
-    h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:-.02em;
+    .brand{display:flex; align-items:center; gap:10px; min-width: 220px;}
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background:
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.30), transparent 55%),
+        radial-gradient(26px 26px at 70% 70%, rgba(0,212,255,.25), transparent 60%),
+        linear-gradient(135deg, rgba(0,212,255,.22), rgba(102,242,179,.18));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
     }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      max-width:64ch;
+    .brand .name{display:flex; flex-direction:column; gap:2px; line-height:1.1;}
+    .brand .name b{font-size:14px; letter-spacing:.01em}
+    .brand .name span{font-family: var(--mono); font-size:11px; color: var(--muted)}
+    .top-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      user-select:none;
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .btn:hover{background: rgba(255,255,255,.07)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(0,212,255,.20), rgba(122,238,255,.10));
+      border-color: rgba(0,212,255,.28);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    }
+    .btn.good{
+      background: linear-gradient(90deg, rgba(102,242,179,.18), rgba(0,212,255,.09));
+      border-color: rgba(102,242,179,.26);
+    }
+    .btn.ghost{background: rgba(0,0,0,.16)}
+
+    .hero{
+      margin-top:18px;
+      border:1px solid var(--border);
+      border-radius: var(--r20);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(900px 220px at 10% 0%, rgba(0,212,255,.22), transparent 60%),
+        radial-gradient(900px 220px at 90% 0%, rgba(102,242,179,.16), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:18px;
+      padding:22px 22px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns:1fr}
+      .brand{min-width:unset}
+    }
+
+    .h-title{margin:0; font-size:34px; letter-spacing:-.03em; line-height:1.05}
+    .h-sub{margin:10px 0 0; color: var(--muted); font-size:14px; max-width:75ch}
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .badge{
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(234,240,255,.78);
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      padding:8px 10px;
+      border-radius:999px;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--c1);
+      box-shadow: 0 0 16px rgba(0,212,255,.35);
+    }
+    .meta-card{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      border-radius: var(--r16);
+      padding:14px 14px;
+    }
+    .meta-card h3{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(234,240,255,.72);
+      font-family: var(--mono);
+    }
+    .meta-card p{margin:0; color: var(--muted); font-size:13px; line-height:1.45}
+    .meta-card .mini{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:7px 9px;
+      border-radius:999px;
+      font-family: var(--mono);
+      font-size:11px;
+      color: rgba(234,240,255,.75);
     }
 
     .controls{
-      display:flex; flex-direction:column; gap:10px; min-width:320px; flex:1;
-      align-items:stretch;
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
     }
-    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .search{flex:1; min-width:260px; display:flex; gap:10px; align-items:center}
     .input{
-      flex:1;
-      min-width:220px;
+      width:100%;
       border:1px solid var(--border);
-      background:rgba(0,0,0,.18);
-      color:var(--text);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
       padding:12px 12px;
-      border-radius:14px;
+      border-radius: 999px;
       outline:none;
+      font-size:14px;
     }
-    .input::placeholder{color:rgba(169,182,199,.7)}
-    .btn{
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.18);
-      color:var(--text);
-      padding:12px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      transition: transform .08s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn:hover{background:rgba(255,255,255,.06)}
-    .btn:active{transform: translateY(1px)}
-    .btn.primary{
-      background:linear-gradient(90deg, rgba(0,212,255,.18), rgba(122,238,255,.10));
-      border-color: rgba(0,212,255,.25);
-    }
-    .btn.good{
-      background:linear-gradient(90deg, rgba(102,242,179,.16), rgba(0,212,255,.08));
-      border-color: rgba(102,242,179,.24);
-    }
-    .tabs{
-      display:flex; gap:8px; flex-wrap:wrap;
-    }
+    .input::placeholder{color: rgba(234,240,255,.45)}
+    .filters{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
     .tab{
       padding:10px 12px;
       border-radius:999px;
       border:1px solid var(--border);
-      background:rgba(0,0,0,.16);
-      color:var(--muted);
+      background: rgba(0,0,0,.16);
+      color: rgba(234,240,255,.68);
       cursor:pointer;
       font-size:13px;
-      transition: background .15s ease, color .15s ease, border-color .15s ease;
+      transition: background .15s ease, border-color .15s ease, color .15s ease;
+      user-select:none;
     }
     .tab.active{
-      color:var(--text);
-      background:rgba(255,255,255,.08);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
       border-color: rgba(122,238,255,.22);
     }
 
-    .meta{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      color:var(--muted); font-size:12px;
-    }
-    .meta .dot{opacity:.5}
-    .notice{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(102,242,179,.18);
-      background:rgba(102,242,179,.06);
-      color:rgba(231,237,246,.92);
-      font-size:13px;
-    }
-
-    main{margin-top:18px}
     .grid{
+      margin-top:14px;
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap:12px;
     }
+
+    /* Less vertical space in cards */
     .card{
       grid-column: span 6;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      padding:16px 16px 14px;
+      border-radius: var(--r20);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow2);
+      padding:14px 14px 10px;
       position:relative;
       overflow:hidden;
-      min-height: 132px;
+      min-height: unset;
+      cursor:pointer;
+      transform: translateZ(0);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(122,238,255,.20);
+      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
     }
     .card:before{
       content:"";
       position:absolute; inset:-2px;
-      background: radial-gradient(700px 200px at 15% 0%, rgba(0,212,255,.10), transparent 55%),
-                  radial-gradient(700px 200px at 85% 0%, rgba(102,242,179,.08), transparent 55%);
-      opacity:.75;
+      background:
+        radial-gradient(700px 220px at 12% 0%, rgba(0,212,255,.12), transparent 60%),
+        radial-gradient(700px 220px at 88% 0%, rgba(102,242,179,.10), transparent 60%);
+      opacity:.9;
       pointer-events:none;
     }
     .card > *{position:relative}
+
     .dose{
+      margin:0;
       font-size:18px;
       letter-spacing:-.01em;
-      margin:0 0 12px 0;
+      line-height:1.22;
     }
-    .tags{
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
-      margin-top:auto;
-    }
-    .tag{
-      display:inline-flex;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.14);
-      color:var(--muted);
-      font-size:12px;
-      gap:8px;
+
+    .bottom{
+      margin-top:0;
+      display:flex;
       align-items:center;
-    }
-    .tag .spark{color:var(--accent2)}
-    .tag .leaf{color:var(--good)}
-    .tag .sun{color:var(--warn)}
-    .actions{
-      position:absolute;
-      right:12px;
-      top:12px;
-      display:flex;
-      gap:8px;
-    }
-    .iconbtn{
-      width:38px; height:38px;
-      display:grid; place-items:center;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.16);
-      cursor:pointer;
-      transition: background .15s ease, transform .08s ease;
-    }
-    .iconbtn:hover{background:rgba(255,255,255,.06)}
-    .iconbtn:active{transform: translateY(1px)}
-    .icon{
-      width:18px; height:18px; opacity:.9;
-      fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-      color:rgba(231,237,246,.9);
-    }
-    .footer{
-      margin-top:18px;
-      color:var(--muted);
-      font-size:12px;
-      display:flex;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      opacity:.9;
     }
+
+    .tags{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    .tag{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: rgba(234,240,255,.66);
+      border-radius:999px;
+      padding:6px 9px;
+      font-size:12px;
+      display:inline-flex; align-items:center; gap:8px;
+      user-select:none;
+    }
+    .tag strong{color: rgba(234,240,255,.86); font-weight:600}
+    .spark{color: var(--c2)}
+    .leaf{color: var(--c3)}
+    .sun{color: var(--c4)}
+
+    .card-actions{display:flex; gap:8px; align-items:center}
+    .iconbtn{
+      width:36px; height:36px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: background .15s ease, transform .08s ease;
+      user-select:none;
+    }
+    .iconbtn:hover{background: rgba(255,255,255,.06)}
+    .iconbtn:active{transform: translateY(1px)}
+    .icon{
+      width:18px; height:18px;
+      stroke: rgba(234,240,255,.90);
+      fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+    }
+
+    .empty{
+      grid-column: span 12;
+      padding:18px 16px;
+      border-radius: var(--r20);
+      border:1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+    }
+
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index: 50;
+    }
+    .modal.show{display:flex}
+    .sheet{
+      width:min(760px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(900px 300px at 15% 0%, rgba(0,212,255,.16), transparent 60%),
+        radial-gradient(900px 300px at 85% 0%, rgba(102,242,179,.12), transparent 60%),
+        rgba(10,14,22,.92);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .sheet-head{
+      padding:16px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .sheet-head b{
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-family: var(--mono);
+      color: rgba(234,240,255,.78);
+    }
+    .sheet-body{padding:18px 16px 16px}
+    .big{font-size:28px; letter-spacing:-.02em; line-height:1.12; margin:0}
+    .sheet-meta{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      color: var(--muted);
+      font-size:13px;
+    }
+    .kbd{
+      font-family: var(--mono);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:12px;
+      color: rgba(234,240,255,.78);
+    }
+    .sheet-actions{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap}
+    .fineprint{
+      padding:12px 16px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color: rgba(234,240,255,.55);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      font-family: var(--mono);
+    }
+
     .toast{
       position:fixed;
       left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
+      bottom:16px;
+      transform: translateX(-50%) translateY(6px);
       padding:10px 12px;
       border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(10,14,20,.85);
-      backdrop-filter: blur(10px);
-      color:var(--text);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,22,.85);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow2);
+      color: rgba(234,240,255,.92);
       font-size:13px;
-      box-shadow: var(--shadow);
       opacity:0;
       pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
+      transition: opacity .16s ease, transform .16s ease;
+      z-index: 60;
     }
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(-4px);
+    .toast.show{opacity:1; transform: translateX(-50%) translateY(0)}
+
+    .footer{
+      margin-top:18px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      color: rgba(234,240,255,.55);
+      font-size:12px;
+      font-family: var(--mono);
     }
-    .empty{
-      margin-top:12px;
-      padding:18px 16px;
-      border-radius:var(--radius);
-      border:1px dashed rgba(255,255,255,.18);
-      color:var(--muted);
-      background:rgba(0,0,0,.14);
-    }
-    @media (max-width: 900px){
-      .card{grid-column: span 12;}
-      header{padding:18px}
-      .controls{min-width:unset}
+    @media (max-width: 860px){
+      .card{grid-column: span 12}
+      .h-title{font-size:30px}
     }
   </style>
 </head>
+
 <body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
   <div class="wrap">
-    <header>
-      <div class="title">
-        <div class="kicker">
-          <span class="pill">good vibes only</span>
-          <span class="pill">micro-text “doses”</span>
-          <span class="pill">wonder • warmth • gentle shift</span>
+    <div class="topbar">
+      <a class="brand" href="#/" title="Home">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="name">
+          <b>Human Doses</b>
+          <span>good-vibe microtext • static site</span>
         </div>
-        <h1>LLM Drugs for Humans</h1>
-        <p class="sub">
-          Short, plain-language lines that bloom into a good feeling after you read them.
-          No dread. No invasive body-horror. Just “whoa” and “aww.”
-        </p>
-        <div class="notice" id="notice">
-          Tip: if something feels even slightly scary, remove it. This site is curated for “safe and uplifting.”
+      </a>
+
+      <div class="top-actions">
+        <button class="btn ghost" id="aboutBtn" type="button">What is this?</button>
+        <button class="btn good" id="randomBtn" type="button">Random dose</button>
+        <button class="btn primary" id="copyVisibleBtn" type="button">Copy visible</button>
+      </div>
+    </div>
+
+    <section class="hero" aria-label="Hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="h-title">“LLM drugs” for humans — only the good trips.</h1>
+          <p class="h-sub">
+            Short strings that gently shift your state: warmth, wonder, perspective. No dread, no scary.
+            Built for sharing. Built to show taste and technical polish. Static site.
+          </p>
+
+          <div class="badges" aria-label="Badges">
+            <div class="badge"><span class="dot"></span> curated set</div>
+            <div class="badge"><span class="dot" style="background:var(--c3)"></span> share-first UX</div>
+            <div class="badge"><span class="dot" style="background:var(--c4)"></span> deep links + keyboard</div>
+            <div class="badge"><span class="dot" style="background:var(--c2)"></span> zero backend</div>
+          </div>
         </div>
+
+        <aside class="meta-card" aria-label="Shortcuts">
+          <h3>Shortcuts</h3>
+          <p>Fast discovery + frictionless sharing—without a server.</p>
+          <div class="mini">
+            <div class="chip">⌘/Ctrl+K focus search</div>
+            <div class="chip">Enter open top result</div>
+            <div class="chip">C copy open dose</div>
+            <div class="chip">R random</div>
+            <div class="chip">Esc close</div>
+          </div>
+        </aside>
       </div>
 
       <div class="controls" aria-label="Controls">
-        <div class="row">
-          <input id="search" class="input" type="search" placeholder="Search (e.g., dogs, universe, water, song…)" autocomplete="off" />
-          <button id="randomBtn" class="btn good" type="button">Random dose</button>
-          <button id="copyAllBtn" class="btn primary" type="button">Copy visible</button>
+        <div class="search">
+          <input id="search" class="input" type="search" placeholder="Search (dogs, universe, water, music…)" autocomplete="off" />
         </div>
-        <div class="tabs" role="tablist" aria-label="Categories">
+        <div class="filters" role="tablist" aria-label="Filters">
           <button class="tab active" data-cat="All" role="tab" aria-selected="true">All</button>
           <button class="tab" data-cat="Wonder" role="tab" aria-selected="false">Wonder</button>
           <button class="tab" data-cat="Warmth" role="tab" aria-selected="false">Warmth</button>
           <button class="tab" data-cat="Cosmic" role="tab" aria-selected="false">Cosmic</button>
           <button class="tab" data-cat="Gentle Shift" role="tab" aria-selected="false">Gentle Shift</button>
         </div>
-        <div class="meta" id="meta">
-          <span id="count">0 doses</span>
-          <span class="dot">•</span>
-          <span>click a card’s copy icon to share</span>
-          <span class="dot">•</span>
-          <span>single-file HTML</span>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-label="Dose grid"></section>
+
+    <div class="footer">
+      <div>Single-file static site • deploy anywhere (GitHub Pages / Netlify / Cloudflare Pages)</div>
+      <div id="count"></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Dose modal">
+    <div class="sheet">
+      <div class="sheet-head">
+        <b>DOSE</b>
+        <button class="iconbtn" id="closeModal" type="button" title="Close (Esc)" aria-label="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6L6 18"></path><path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="sheet-body">
+        <p class="big" id="modalText"></p>
+        <div class="sheet-meta" id="modalMeta"></div>
+        <div class="sheet-actions">
+          <button class="btn primary" id="copyBtn" type="button">Copy</button>
+          <button class="btn good" id="shareBtn" type="button">Share</button>
+          <button class="btn ghost" id="nextBtn" type="button">Next</button>
         </div>
       </div>
-    </header>
-
-    <main>
-      <div class="grid" id="grid" aria-live="polite"></div>
-      <div class="empty" id="empty" style="display:none;">
-        No doses match that filter/search.
+      <div class="fineprint">
+        <div id="permalink"></div>
+        <div>good vibes only</div>
       </div>
-
-      <div class="footer">
-        <div>Curated starter set from your Claude discussion. Edit the list in the HTML to add more.</div>
-        <div>Suggestion: add intensity tags later (e.g., “soft”, “medium”) if you expand beyond good vibes.</div>
-      </div>
-    </main>
+    </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // Good-vibes-only doses (from the conversation; curated to avoid dread/scare).
+    /***********************
+     * Static data: good-vibes-only doses
+     ***********************/
     const DOSES = [
-      { id: 1,  text: "A tree spent decades turning sunlight into the chair you’re sitting in.", cat: "Wonder", tags:["nature","time"] },
-      { id: 2,  text: "Every cup of water you’ve ever drunk has been rain at least once.", cat: "Wonder", tags:["water","cycle"] },
-      { id: 3,  text: "Dogs dream about you.", cat: "Warmth", tags:["dogs","love"] },
-      { id: 4,  text: "Somewhere right now two strangers are laughing at the exact same thing for completely different reasons.", cat: "Warmth", tags:["people","connection"] },
-      { id: 5,  text: "Every song you’ve ever loved was just air vibrating in a pattern someone chose.", cat: "Wonder", tags:["music","sound"] },
-      { id: 6,  text: "Bees have no idea we eat their honey. We’re just weather to them.", cat: "Gentle Shift", tags:["bees","perspective"] },
-      { id: 7,  text: "Fish don’t know they’re wet. You don’t know what yours is.", cat: "Gentle Shift", tags:["awareness","lens"] },
-      { id: 8,  text: "Right now your body is quietly replacing itself. You’re a ship of Theseus that likes music.", cat: "Gentle Shift", tags:["time","identity"] },
-      { id: 9,  text: "Light left a star a million years ago just to bounce off your cereal this morning.", cat: "Cosmic", tags:["light","stars"] },
-      { id: 10, text: "Every atom in you was once inside something that exploded.", cat: "Cosmic", tags:["atoms","stars"] },
-      { id: 11, text: "You’re a way for the universe to look at itself and feel weird about it.", cat: "Cosmic", tags:["universe","mind"] },
-      { id: 12, text: "A photon traveled uninterrupted across the universe and ended its journey on your retina.", cat: "Cosmic", tags:["photon","vision"] },
-      { id: 13, text: "You’ve walked past someone’s future best friend hundreds of times.", cat: "Warmth", tags:["friends","future"] },
-      { id: 14, text: "There’s a word in a language you don’t speak that describes exactly how you feel right now.", cat: "Wonder", tags:["language","feeling"] },
-      { id: 15, text: "Everyone you see in public is in the middle of something.", cat: "Warmth", tags:["empathy","people"] },
+      // Warmth
+      { id:"dogs-dream", cat:"Warmth", tags:["dogs","love"], text:"Dogs dream about you." },
+      { id:"laugh-signature", cat:"Warmth", tags:["joy","identity"], text:"Your laugh is a tiny signature no one else can forge." },
+      { id:"two-strangers-laughing", cat:"Warmth", tags:["people","connection"], text:"Somewhere right now two strangers are laughing at the exact same thing for completely different reasons." },
+      { id:"public-middle", cat:"Warmth", tags:["empathy","people"], text:"Everyone you see in public is in the middle of something." },
+      { id:"recipe-memory", cat:"Warmth", tags:["food","memory"], text:"A recipe is just a memory you can eat." },
+      { id:"favorite-song-stranger", cat:"Warmth", tags:["music","connection"], text:"Someone’s favorite song exists because a stranger once felt something strongly." },
+      { id:"future-best-friend", cat:"Warmth", tags:["friends","future"], text:"You’ve walked past someone’s future best friend hundreds of times." },
+      { id:"small-kindness", cat:"Warmth", tags:["kindness","ripple"], text:"A small kindness you forgot might still be living in someone’s day." },
+      { id:"pet-trust", cat:"Warmth", tags:["pets","trust"], text:"To a pet, you’re a whole weather system of comfort." },
+      { id:"shared-joke", cat:"Warmth", tags:["humor","connection"], text:"The same joke told in two cities can still land like a handshake." },
+      { id:"someone-rooting", cat:"Warmth", tags:["support","hope"], text:"Someone is quietly rooting for you more than you realize." },
+      { id:"handwritten-note", cat:"Warmth", tags:["care","details"], text:"A handwritten note is proof a thought took a physical form for you." },
+      { id:"warm-light-window", cat:"Warmth", tags:["home","calm"], text:"Warm light in a window is a universal sign: someone’s okay in there." },
+      { id:"smile-echo", cat:"Warmth", tags:["social","ripple"], text:"A smile can be a tiny echo that makes a room softer." },
+      { id:"found-object", cat:"Warmth", tags:["serendipity","joy"], text:"Finding a lost thing feels like the universe returning your call." },
+      { id:"someone-thinking-kindly", cat:"Warmth", tags:["connection","soft"], text:"Somebody has thought of you with a quiet kind of gratitude." },
+      { id:"inside-jokes-bridges", cat:"Warmth", tags:["friends","humor"], text:"Inside jokes are bridges only two people can see." },
+      { id:"text-bubble", cat:"Warmth", tags:["communication","care"], text:"A message bubble is a tiny “I’m here” you can hold." },
+      { id:"tea-steam", cat:"Warmth", tags:["cozy","senses"], text:"Steam from a warm drink is comfort you can see." },
+      { id:"fresh-sheets", cat:"Warmth", tags:["home","cozy"], text:"Fresh sheets feel like a reset button you can sleep in." },
+      { id:"library-quiet", cat:"Warmth", tags:["books","calm"], text:"A library is a public place for quiet hope." },
+      { id:"someone-made-bench", cat:"Warmth", tags:["humanity","craft"], text:"Someone made a bench once and now strangers get to rest." },
+      { id:"door-held-open", cat:"Warmth", tags:["kindness","small"], text:"Holding a door open is a tiny vote for each other." },
+      { id:"good-morning", cat:"Warmth", tags:["ritual","care"], text:"“Good morning” is a small spell people cast for each other." },
+      { id:"cooking-smell", cat:"Warmth", tags:["home","food"], text:"The smell of cooking is a room practicing happiness." },
+      { id:"socks-warm", cat:"Warmth", tags:["cozy","simple"], text:"Warm socks are underrated technology." },
+      { id:"cat-slow-blink", cat:"Warmth", tags:["pets","trust"], text:"A slow blink from a cat is a compliment." },
+      { id:"shared-umbrella", cat:"Warmth", tags:["care","weather"], text:"Sharing an umbrella is sharing a small world." },
+      { id:"warm-mug-hands", cat:"Warmth", tags:["cozy","calm"], text:"A warm mug in your hands is a small, reliable promise." },
+      { id:"favorite-spot", cat:"Warmth", tags:["home","comfort"], text:"You probably have a “favorite spot” without meaning to." },
+      { id:"soft-blanket", cat:"Warmth", tags:["cozy","rest"], text:"A soft blanket is a hug with no social obligations." },
+      { id:"someone-saved-your-message", cat:"Warmth", tags:["care","memory"], text:"Someone has saved a message from you." },
 
-      // Two “wonder” lines that were borderline; kept because they’re neutral-to-uplifting.
-      { id: 16, text: "You are the universe’s attempt at reading this sentence.", cat: "Cosmic", tags:["meta","universe"] },
-      { id: 17, text: "You’re an arrangement of matter that learned to appreciate being an arrangement of matter.", cat: "Gentle Shift", tags:["gratitude","mind"] },
+      // Wonder
+      { id:"sun-chair", cat:"Wonder", tags:["nature","time"], text:"A tree spent decades turning sunlight into the chair you’re sitting in." },
+      { id:"rain-water", cat:"Wonder", tags:["water","cycle"], text:"Every cup of water you’ve ever drunk has been rain at least once." },
+      { id:"music-air", cat:"Wonder", tags:["music","sound"], text:"Every song you’ve ever loved was just air vibrating in a pattern someone chose." },
+      { id:"cloud-oceans", cat:"Wonder", tags:["clouds","nature"], text:"Clouds are oceans taking a walk." },
+      { id:"plant-sun", cat:"Wonder", tags:["plants","sun"], text:"Somewhere, a plant is leaning toward the same sun you’re seeing through a window." },
+      { id:"paper-from-forest", cat:"Wonder", tags:["paper","trees"], text:"A book is a forest that learned to speak." },
+      { id:"snowflake-time", cat:"Wonder", tags:["winter","detail"], text:"A snowflake is weather doing lacework." },
+      { id:"mirror-soft", cat:"Wonder", tags:["perception","everyday"], text:"A mirror is light doing its best impression of you." },
+      { id:"soap-bubbles", cat:"Wonder", tags:["physics","play"], text:"Bubbles are geometry practicing joy." },
+      { id:"ink-thought", cat:"Wonder", tags:["writing","mind"], text:"Ink is a way for thoughts to stop being shy." },
+      { id:"map-loveletter", cat:"Wonder", tags:["travel","hope"], text:"Every map is a love letter to places we wanted to reach." },
+      { id:"coffee-beans", cat:"Wonder", tags:["coffee","world"], text:"Coffee is sunlight and rainfall translated into a morning." },
+      { id:"fridge-hum", cat:"Wonder", tags:["home","sound"], text:"The quiet hum of a fridge is modern life keeping you company." },
+      { id:"color-names", cat:"Wonder", tags:["language","color"], text:"Color names are agreements we make with the sky." },
+      { id:"stairs-mountain", cat:"Wonder", tags:["movement","metaphor"], text:"Stairs are tiny mountains you can climb indoors." },
+      { id:"shadow-time", cat:"Wonder", tags:["light","time"], text:"A shadow is a timestamp made of darkness." },
+      { id:"rain-smell", cat:"Wonder", tags:["rain","senses"], text:"The smell after rain is the ground saying hello." },
+      { id:"bread-alchemy", cat:"Wonder", tags:["food","craft"], text:"Bread is flour learning to be brave." },
+      { id:"keys-small-music", cat:"Wonder", tags:["sound","objects"], text:"Keys jingling is a pocket-sized song." },
+      { id:"photos-timecapsules", cat:"Wonder", tags:["photos","memory"], text:"Photos are time learning to sit still." },
+      { id:"seed-instructions", cat:"Wonder", tags:["nature","growth"], text:"A seed contains instructions for a whole tree and that’s absurdly cool." },
+      { id:"spider-web-engineering", cat:"Wonder", tags:["nature","design"], text:"A spider builds architecture out of air." },
+      { id:"ant-highways", cat:"Wonder", tags:["nature","systems"], text:"Ants run traffic systems with no signs." },
+      { id:"pencil-wood", cat:"Wonder", tags:["objects","trees"], text:"A pencil is wood that learned to write." },
+      { id:"glass-frozen-light", cat:"Wonder", tags:["materials","light"], text:"Glass is sand that decided to be transparent." },
+      { id:"honey-sun", cat:"Wonder", tags:["bees","alchemy"], text:"Honey is sunlight stored in a jar." },
+      { id:"ice-floating", cat:"Wonder", tags:["physics","water"], text:"Ice floats so lakes don’t freeze solid. Nature chose mercy." },
+      { id:"rainbows-agreement", cat:"Wonder", tags:["light","color"], text:"A rainbow is sunlight agreeing to show its parts." },
+      { id:"whale-songs", cat:"Wonder", tags:["ocean","music"], text:"Some animals sing across entire miles of ocean." },
+      { id:"fire-is-chemistry", cat:"Wonder", tags:["fire","everyday"], text:"Fire is chemistry making light in real time." },
+      { id:"wind-in-trees", cat:"Wonder", tags:["sound","nature"], text:"Wind through trees is the planet humming." },
+      { id:"timezones", cat:"Wonder", tags:["time","world"], text:"Somewhere it’s tomorrow and someone is already laughing." },
+      { id:"mail-is-teleport", cat:"Wonder", tags:["everyday","systems"], text:"Mail is low-speed teleportation for paper." },
+      { id:"rubber-band-potential", cat:"Wonder", tags:["physics","play"], text:"A rubber band is stored-up motion waiting politely." },
+      { id:"stairs-little-goals", cat:"Wonder", tags:["movement","mind"], text:"Small steps are how buildings teach you patience." },
 
-      // Additional safe, same-vibe expansions (non-scary, consistent with the concept)
-      { id: 18, text: "Somewhere, a plant is leaning toward the same sun you’re seeing through a window.", cat: "Wonder", tags:["plants","sun"] },
-      { id: 19, text: "Your laugh is a tiny signature no one else can forge.", cat: "Warmth", tags:["joy","identity"] },
-      { id: 20, text: "A recipe is just a memory you can eat.", cat: "Warmth", tags:["food","memory"] },
-      { id: 21, text: "Clouds are oceans taking a walk.", cat: "Wonder", tags:["clouds","nature"] },
-      { id: 22, text: "Every map is a love letter to places we wanted to reach.", cat: "Gentle Shift", tags:["travel","hope"] },
-      { id: 23, text: "Someone’s favorite song exists because a stranger once felt something strongly.", cat: "Warmth", tags:["music","connection"] },
-      { id: 24, text: "The same air is taking turns being inside all of us.", cat: "Gentle Shift", tags:["breath","shared"] },
-      { id: 25, text: "The night sky is old light arriving right on time.", cat: "Cosmic", tags:["stars","time"] }
+      // Cosmic (awe-forward)
+      { id:"night-old-light", cat:"Cosmic", tags:["stars","time"], text:"The night sky is old light arriving right on time." },
+      { id:"star-cereal", cat:"Cosmic", tags:["light","stars"], text:"Light left a star a million years ago just to bounce off your cereal this morning." },
+      { id:"atoms-exploded", cat:"Cosmic", tags:["atoms","stars"], text:"Every atom in you was once inside something that exploded." },
+      { id:"photon-retina", cat:"Cosmic", tags:["photon","vision"], text:"A photon traveled uninterrupted across the universe and ended its journey on your retina." },
+      { id:"universe-looking", cat:"Cosmic", tags:["universe","mind"], text:"You’re a way for the universe to notice itself." },
+      { id:"gravity-hug", cat:"Cosmic", tags:["gravity","ground"], text:"Gravity is the planet giving you a continuous hug." },
+      { id:"earth-ship", cat:"Cosmic", tags:["earth","motion"], text:"You live on a spaceship made of rock and garden." },
+      { id:"moon-calendar", cat:"Cosmic", tags:["moon","rhythm"], text:"The moon is a nightlight that also keeps time." },
+      { id:"stardust-boring", cat:"Cosmic", tags:["awe","everyday"], text:"Stardust can become a grocery list and that’s kind of incredible." },
+      { id:"sun-quiet-work", cat:"Cosmic", tags:["sun","life"], text:"The sun has been quietly paying the bills for life all along." },
+      { id:"space-between-not-empty", cat:"Cosmic", tags:["space","wonder"], text:"The space between stars isn’t empty—it’s just very, very calm." },
+      { id:"sky-ocean", cat:"Cosmic", tags:["sky","metaphor"], text:"The sky is an ocean you can breathe." },
+      { id:"constellations-stories", cat:"Cosmic", tags:["stories","stars"], text:"Constellations are humans drawing stories on a dark canvas." },
+      { id:"dawn-returns", cat:"Cosmic", tags:["morning","hope"], text:"Dawn is the universe reminding you it still does new." },
+      { id:"oceans-moon", cat:"Cosmic", tags:["moon","ocean"], text:"The moon pulls the ocean like a gentle metronome." },
+      { id:"comet-postcard", cat:"Cosmic", tags:["space","travel"], text:"A comet is a postcard from the early solar system." },
+      { id:"aurora-dance", cat:"Cosmic", tags:["sky","science"], text:"Auroras are solar wind turning into a light show." },
+      { id:"satellites-stars", cat:"Cosmic", tags:["modern","sky"], text:"Some ‘stars’ you see are machines helping humans talk." },
+      { id:"sunrise-angle", cat:"Cosmic", tags:["morning","geometry"], text:"Sunrise is geometry doing something emotional." },
+      { id:"you-stand-on-history", cat:"Cosmic", tags:["earth","time"], text:"You’re standing on layers of time that turned into rock." },
+
+      // Gentle Shift (soft perspective)
+      { id:"bees-weather", cat:"Gentle Shift", tags:["bees","perspective"], text:"Bees have no idea we eat their honey. We’re just weather to them." },
+      { id:"fish-wet", cat:"Gentle Shift", tags:["awareness","lens"], text:"Fish don’t know they’re wet. You don’t know what yours is." },
+      { id:"theseus-music", cat:"Gentle Shift", tags:["time","identity"], text:"You’re a ship of Theseus that still likes the same songs." },
+      { id:"shared-air", cat:"Gentle Shift", tags:["breath","shared"], text:"The same air is taking turns being inside all of us." },
+      { id:"language-word", cat:"Gentle Shift", tags:["language","feeling"], text:"There’s a word in a language you don’t speak that fits your feeling perfectly." },
+      { id:"tiny-choices", cat:"Gentle Shift", tags:["agency","life"], text:"Your life is mostly made of tiny choices doing teamwork." },
+      { id:"you-are-pattern", cat:"Gentle Shift", tags:["mind","calm"], text:"You are a pattern that learned to appreciate patterns." },
+      { id:"attention-is-spotlight", cat:"Gentle Shift", tags:["attention","mind"], text:"Attention is a spotlight you can move, and that’s a superpower." },
+      { id:"nothing-is-just", cat:"Gentle Shift", tags:["meaning","wonder"], text:"Almost nothing is “just” anything once you look closely." },
+      { id:"weather-inside", cat:"Gentle Shift", tags:["emotion","self"], text:"A mood is weather, not a verdict." },
+      { id:"future-is-plural", cat:"Gentle Shift", tags:["hope","future"], text:"The future is plural. More than one good outcome fits." },
+      { id:"rest-is-productive", cat:"Gentle Shift", tags:["rest","health"], text:"Rest is not a pause from life; it’s part of the engine." },
+      { id:"slow-is-forward", cat:"Gentle Shift", tags:["progress","patience"], text:"Slow is still forward." },
+      { id:"today-is-bridge", cat:"Gentle Shift", tags:["time","hope"], text:"Today is a bridge, not a cage." },
+      { id:"permission-to-enjoy", cat:"Gentle Shift", tags:["joy","permission"], text:"You’re allowed to enjoy things without earning them." },
+      { id:"curiosity-kinder", cat:"Gentle Shift", tags:["curiosity","kindness"], text:"Curiosity is often kinder than certainty." },
+      { id:"noticing-peace", cat:"Gentle Shift", tags:["mindfulness","calm"], text:"Noticing is already a kind of peace." },
+      { id:"tiny-sunbeam", cat:"Gentle Shift", tags:["gratitude","small"], text:"A tiny sunbeam on a wall is the day waving at you." }
     ];
 
-    const grid = document.getElementById("grid");
-    const empty = document.getElementById("empty");
-    const count = document.getElementById("count");
-    const toast = document.getElementById("toast");
-    const search = document.getElementById("search");
-    const randomBtn = document.getElementById("randomBtn");
-    const copyAllBtn = document.getElementById("copyAllBtn");
-    const tabs = Array.from(document.querySelectorAll(".tab"));
+    /***********************
+     * UI + behavior (static)
+     ***********************/
+    const els = {
+      grid: document.getElementById("grid"),
+      search: document.getElementById("search"),
+      tabs: Array.from(document.querySelectorAll(".tab")),
+      toast: document.getElementById("toast"),
+      count: document.getElementById("count"),
+      modal: document.getElementById("modal"),
+      closeModal: document.getElementById("closeModal"),
+      modalText: document.getElementById("modalText"),
+      modalMeta: document.getElementById("modalMeta"),
+      copyBtn: document.getElementById("copyBtn"),
+      shareBtn: document.getElementById("shareBtn"),
+      nextBtn: document.getElementById("nextBtn"),
+      permalink: document.getElementById("permalink"),
+      randomBtn: document.getElementById("randomBtn"),
+      copyVisibleBtn: document.getElementById("copyVisibleBtn"),
+      aboutBtn: document.getElementById("aboutBtn"),
+    };
 
     let activeCat = "All";
+    let openId = null;
 
-    function iconCopySVG(){
-      return `
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>`;
+    function toast(msg){
+      els.toast.textContent = msg;
+      els.toast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=>els.toast.classList.remove("show"), 1100);
     }
-    function iconShuffleSVG(){
-      return `
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M16 3h5v5"></path>
-          <path d="M4 20l16-16"></path>
-          <path d="M21 16v5h-5"></path>
-          <path d="M4 4l6 6"></path>
-          <path d="M14 14l6 6"></path>
-        </svg>`;
-    }
-
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add("show");
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(()=>toast.classList.remove("show"), 1200);
-    }
-
     function escapeHTML(s){
       return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
-
-    function matches(d, q){
-      if(!q) return true;
-      const hay = (d.text + " " + d.cat + " " + (d.tags||[]).join(" ")).toLowerCase();
-      return hay.includes(q.toLowerCase());
+    function catIcon(cat){
+      if(cat==="Warmth") return `<span class="leaf">🌿</span>`;
+      if(cat==="Cosmic") return `<span class="spark">✦</span>`;
+      if(cat==="Gentle Shift") return `<span class="sun">☼</span>`;
+      return `<span class="spark">✦</span>`;
+    }
+    function iconCopy(){
+      return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>`;
+    }
+    function iconLink(){
+      return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path>
+        <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path>
+      </svg>`;
     }
 
-    function filtered(){
-      const q = search.value.trim();
-      return DOSES.filter(d => (activeCat==="All" || d.cat===activeCat) && matches(d, q));
+    function filteredList(){
+      const q = els.search.value.trim().toLowerCase();
+      let list = DOSES.slice();
+
+      if(activeCat !== "All"){
+        list = list.filter(d => d.cat === activeCat);
+      }
+      if(q){
+        list = list.filter(d => (d.text+" "+d.cat+" "+(d.tags||[]).join(" ")).toLowerCase().includes(q));
+      }
+      return list;
     }
 
-    async function copyText(txt){
-      try{
-        await navigator.clipboard.writeText(txt);
-        showToast("Copied");
-      }catch(e){
-        // Fallback
+    async function copyToClipboard(text){
+      try{ await navigator.clipboard.writeText(text); toast("Copied"); }
+      catch{
         const ta = document.createElement("textarea");
-        ta.value = txt;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        showToast("Copied");
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); document.execCommand("copy"); ta.remove();
+        toast("Copied");
       }
     }
 
+    function setHash(path){
+      const next = "#"+path;
+      if(location.hash !== next) history.replaceState(null, "", next);
+    }
+
+    function setTab(cat){
+      activeCat = cat;
+      for(const t of els.tabs){
+        const on = (t.dataset.cat===cat);
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      }
+      render();
+      if(!openId) setHash(cat==="All" ? "/" : `/${cat.toLowerCase().replace(/\s+/g,'-')}`);
+    }
+
     function render(){
-      const list = filtered();
-      count.textContent = `${list.length} dose${list.length===1?"":"s"}`;
-      grid.innerHTML = "";
-      empty.style.display = list.length ? "none" : "block";
+      const list = filteredList();
+      els.grid.innerHTML = "";
+      els.count.textContent = `${list.length} visible • ${DOSES.length} total`;
+
+      if(!list.length){
+        const div = document.createElement("div");
+        div.className = "empty";
+        div.textContent = "No doses match that filter/search.";
+        els.grid.appendChild(div);
+        return;
+      }
 
       for(const d of list){
         const card = document.createElement("div");
         card.className = "card";
         card.setAttribute("data-id", d.id);
 
-        const effectIcon = d.cat === "Warmth" ? "leaf" : (d.cat === "Cosmic" ? "spark" : "sun");
-        const effectEmoji = d.cat === "Warmth" ? "🌿" : (d.cat === "Cosmic" ? "✦" : "☼");
+        const tagBits = [
+          `<span class="tag">${catIcon(d.cat)}<strong>${escapeHTML(d.cat)}</strong></span>`,
+          ...(d.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHTML(t)}</span>`)
+        ].join("");
 
         card.innerHTML = `
-          <div class="actions">
-            <button class="iconbtn" type="button" title="Copy dose" aria-label="Copy dose">${iconCopySVG()}</button>
-            <button class="iconbtn shuffle" type="button" title="Random dose" aria-label="Random dose">${iconShuffleSVG()}</button>
-          </div>
           <p class="dose">“${escapeHTML(d.text)}”</p>
-          <div class="tags">
-            <span class="tag"><span class="${effectIcon}">${effectEmoji}</span>${escapeHTML(d.cat)}</span>
-            ${(d.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHTML(t)}</span>`).join("")}
+          <div class="bottom">
+            <div class="tags">${tagBits}</div>
+            <div class="card-actions">
+              <button class="iconbtn copy" type="button" title="Copy">${iconCopy()}</button>
+              <button class="iconbtn link" type="button" title="Permalink">${iconLink()}</button>
+            </div>
           </div>
         `;
 
-        const [copyBtn, shuffleBtn] = card.querySelectorAll(".iconbtn");
-        copyBtn.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(d.text); });
-        shuffleBtn.addEventListener("click", (e)=>{ e.stopPropagation(); pickRandomAndScroll(); });
+        card.addEventListener("click", (e)=>{
+          if(e.target.closest("button")) return;
+          openDose(d.id);
+        });
 
-        // Click anywhere to copy (fast sharing)
-        card.addEventListener("click", ()=> copyText(d.text));
+        card.querySelector(".copy").addEventListener("click", (e)=>{
+          e.stopPropagation();
+          copyToClipboard(d.text);
+        });
 
-        grid.appendChild(card);
+        card.querySelector(".link").addEventListener("click", (e)=>{
+          e.stopPropagation();
+          setHash(`/dose/${d.id}`);
+          openDose(d.id, {silentHash:true});
+          toast("Permalink ready");
+        });
+
+        els.grid.appendChild(card);
       }
     }
 
-    function setTab(cat){
-      activeCat = cat;
-      for(const t of tabs){
-        const on = t.dataset.cat === cat;
-        t.classList.toggle("active", on);
-        t.setAttribute("aria-selected", on ? "true" : "false");
-      }
-      render();
+    function openDose(id, opts={}){
+      const d = DOSES.find(x=>x.id===id);
+      if(!d) return;
+
+      openId = id;
+      if(!opts.silentHash) setHash(`/dose/${id}`);
+
+      els.modalText.textContent = `“${d.text}”`;
+      els.modalMeta.innerHTML = `
+        <span class="kbd">${d.cat}</span>
+        ${(d.tags||[]).slice(0,6).map(t=>`<span class="kbd">${escapeHTML(t)}</span>`).join("")}
+      `;
+      els.permalink.textContent = location.hash || `#/dose/${id}`;
+
+      els.modal.classList.add("show");
+      document.body.style.overflow = "hidden";
     }
 
-    function pickRandomAndScroll(){
-      const list = filtered();
+    function closeDose(){
+      els.modal.classList.remove("show");
+      document.body.style.overflow = "";
+      openId = null;
+
+      const view = activeCat==="All" ? "/" : `/${activeCat.toLowerCase().replace(/\s+/g,"-")}`;
+      setHash(view);
+    }
+
+    function nextDose(){
+      const list = filteredList();
+      if(!list.length) return;
+      const idx = Math.max(0, list.findIndex(x=>x.id===openId));
+      const next = list[(idx+1)%list.length];
+      openDose(next.id);
+    }
+
+    function randomDose(){
+      const list = filteredList();
       if(!list.length) return;
       const pick = list[Math.floor(Math.random()*list.length)];
-      render(); // ensure cards exist for current filter/search
-      const el = grid.querySelector(`[data-id="${pick.id}"]`);
-      if(el){
-        el.scrollIntoView({behavior:"smooth", block:"center"});
-        el.animate([{transform:"scale(1)"},{transform:"scale(1.015)"},{transform:"scale(1)"}], {duration:260});
-        showToast("Random dose");
+      openDose(pick.id);
+    }
+
+    async function shareDose(){
+      const d = DOSES.find(x=>x.id===openId);
+      if(!d) return;
+      const url = location.href;
+      const payload = { title:"Human Doses", text:`“${d.text}”`, url };
+      try{
+        if(navigator.share){ await navigator.share(payload); toast("Shared"); }
+        else{ await copyToClipboard(`${payload.text}\n${payload.url}`); toast("Copied share text"); }
+      }catch{}
+    }
+
+    function copyVisible(){
+      const list = filteredList();
+      const text = list.map(d=>`- ${d.text}`).join("\n");
+      copyToClipboard(text || "");
+    }
+
+    function showAbout(){
+      alert(
+`Human Doses is the human-safe mirror of “LLM drugs” (state-shifting strings).
+Everything here is curated for good feelings: warmth, wonder, and gentle perspective shifts.
+Static site: no accounts, no tracking, no server. Share by copying or deep-linking.`
+      );
+    }
+
+    function onKey(e){
+      const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+      const mod = isMac ? e.metaKey : e.ctrlKey;
+
+      if(mod && e.key.toLowerCase()==="k"){
+        e.preventDefault();
+        els.search.focus();
+        els.search.select();
+        return;
+      }
+      if(e.key==="Escape" && els.modal.classList.contains("show")){
+        closeDose();
+        return;
+      }
+      if(e.key.toLowerCase()==="r"){
+        randomDose();
+        return;
+      }
+      if(e.key==="Enter"){
+        if(document.activeElement === els.search) return;
+        if(!els.modal.classList.contains("show")){
+          const list = filteredList();
+          if(list[0]) openDose(list[0].id);
+        }
+        return;
+      }
+      if(e.key.toLowerCase()==="c" && els.modal.classList.contains("show")){
+        const d = DOSES.find(x=>x.id===openId);
+        if(d) copyToClipboard(d.text);
+        return;
       }
     }
 
-    // Events
-    tabs.forEach(t => t.addEventListener("click", ()=> setTab(t.dataset.cat)));
-    search.addEventListener("input", ()=> render());
-    randomBtn.addEventListener("click", ()=> pickRandomAndScroll());
-    copyAllBtn.addEventListener("click", ()=>{
-      const list = filtered();
-      const txt = list.map(d => `- ${d.text}`).join("\n");
-      copyText(txt || "");
-    });
+    function applyRoute(){
+      const h = (location.hash || "#/").slice(1);
+      if(h.startsWith("/dose/")){
+        const id = h.split("/dose/")[1];
+        if(id) openDose(id, {silentHash:true});
+        return;
+      }
+      const map = {
+        "/":"All",
+        "/wonder":"Wonder",
+        "/warmth":"Warmth",
+        "/cosmic":"Cosmic",
+        "/gentle-shift":"Gentle Shift"
+      };
+      const view = map[h] ?? "All";
+      setTab(view);
+    }
 
-    // Initial render
+    // Wire events
+    els.tabs.forEach(t => t.addEventListener("click", ()=> setTab(t.dataset.cat)));
+    els.search.addEventListener("input", ()=> render());
+    els.randomBtn.addEventListener("click", ()=> randomDose());
+    els.copyVisibleBtn.addEventListener("click", ()=> copyVisible());
+    els.aboutBtn.addEventListener("click", ()=> showAbout());
+
+    els.closeModal.addEventListener("click", ()=> closeDose());
+    els.modal.addEventListener("click", (e)=>{ if(e.target===els.modal) closeDose(); });
+
+    els.copyBtn.addEventListener("click", ()=>{
+      const d = DOSES.find(x=>x.id===openId);
+      if(d) copyToClipboard(d.text);
+    });
+    els.shareBtn.addEventListener("click", ()=> shareDose());
+    els.nextBtn.addEventListener("click", ()=> nextDose());
+
+    window.addEventListener("hashchange", applyRoute);
+    window.addEventListener("keydown", onKey);
+
+    /***********************
+     * Particle background
+     ***********************/
+    (function particles(){
+      const canvas = document.getElementById("bg");
+      const ctx = canvas.getContext("2d", { alpha:true });
+      let w=0,h=0,dpr=1;
+      const N = 110;
+      const pts = [];
+      const rnd = (a,b)=> a + Math.random()*(b-a);
+
+      function resize(){
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        w = canvas.width = Math.floor(innerWidth * dpr);
+        h = canvas.height = Math.floor(innerHeight * dpr);
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerHeight + "px";
+      }
+      function init(){
+        pts.length = 0;
+        for(let i=0;i<N;i++){
+          pts.push({
+            x: rnd(0,w), y: rnd(0,h),
+            vx: rnd(-.18,.18)*dpr, vy: rnd(-.14,.14)*dpr,
+            r: rnd(.6,1.6)*dpr,
+            t: rnd(0,Math.PI*2)
+          });
+        }
+      }
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+
+        const g = ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0, "rgba(0,212,255,0.05)");
+        g.addColorStop(0.6, "rgba(122,238,255,0.03)");
+        g.addColorStop(1, "rgba(102,242,179,0.04)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,w,h);
+
+        for(const p of pts){
+          p.t += 0.01;
+          p.x += p.vx + Math.sin(p.t)*0.06*dpr;
+          p.y += p.vy + Math.cos(p.t)*0.06*dpr;
+          if(p.x<0) p.x=w; if(p.x>w) p.x=0;
+          if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = "rgba(234,240,255,0.45)";
+          ctx.fill();
+        }
+
+        for(let i=0;i<pts.length;i++){
+          for(let j=i+1;j<pts.length;j++){
+            const a=pts[i], b=pts[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            const max=130*dpr;
+            if(dist<max){
+              const alpha = (1 - dist/max) * 0.18;
+              ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
+              ctx.lineWidth = 1*dpr;
+              ctx.beginPath();
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      resize(); init(); draw();
+      addEventListener("resize", ()=>{ resize(); init(); }, {passive:true});
+    })();
+
+    // Boot
     render();
+    applyRoute();
   </script>
 </body>
 </html>
