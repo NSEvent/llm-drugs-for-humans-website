@@ -543,14 +543,15 @@
       return `<span class="spark">\u2726</span>`;
     }
 
-    async function copyToClipboard(text){
-      try{ await navigator.clipboard.writeText(text); toast("Copied"); }
-      catch{
-        const ta = document.createElement("textarea");
-        ta.value = text; document.body.appendChild(ta);
-        ta.select(); document.execCommand("copy"); ta.remove();
-        toast("Copied");
-      }
+    function copyToClipboard(text){
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:fixed;left:-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      toast("Copied");
     }
 
     function setHash(path){
@@ -628,23 +629,21 @@
       showRandomDose(activeMood);
     }
 
-    async function shareDose(){
+    function shareDose(){
       if(!currentDose) return;
-      const url = location.href;
       const text = `\u201C${currentDose.text}\u201D`;
+      const isWeb = location.protocol.startsWith("http");
 
       if(navigator.share){
-        try{
-          await navigator.share({ title:"Human Doses", text, url });
-          toast("Shared");
-          return;
-        }catch(e){
-          if(e.name === "AbortError") return; // user cancelled share sheet
-          // share failed (e.g. file:// or insecure context) — fall through to clipboard
-        }
+        const payload = { title:"Human Doses", text };
+        if(isWeb) payload.url = location.href;
+        navigator.share(payload)
+          .then(()=> toast("Shared"))
+          .catch(()=>{});
+        return;
       }
 
-      await copyToClipboard(`${text}\n${url}`);
+      copyToClipboard(isWeb ? `${text}\n${location.href}` : text);
     }
 
     /* Event wiring */
