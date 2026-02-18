@@ -164,6 +164,13 @@
     }
     #dose-view.active{display:flex}
 
+    .dose-sub{
+      margin:0;
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(234,240,255,.4);
+      letter-spacing:.04em;
+    }
     .dose-text{
       margin:0;
       font-size:26px;
@@ -304,7 +311,7 @@
 
   <div class="wrap">
     <!-- Mood selector -->
-    <div id="mood-select">
+    <div id="mood-select" style="display:none">
       <h1 class="mood-title">Pick a vibe</h1>
       <p class="mood-sub">Short strings that gently shift your state. No dread, no scary.</p>
       <div class="mood-grid">
@@ -318,6 +325,7 @@
 
     <!-- Dose view -->
     <div id="dose-view">
+      <p class="dose-sub">State-shifting micro-texts. No dread, no scary.</p>
       <p class="dose-text" id="doseText"></p>
       <div class="dose-meta" id="doseMeta"></div>
       <div class="dose-actions">
@@ -325,7 +333,7 @@
         <button class="btn" id="copyBtn" type="button">Copy</button>
         <button class="btn good" id="shareBtn" type="button">Share</button>
       </div>
-      <button class="change-mood" id="changeMoodBtn" type="button">Change mood</button>
+      <button class="change-mood" id="changeMoodBtn" type="button">Pick a mood</button>
       <div class="kbd-hints">
         <span>Space / → / N next</span>
         <span>C copy</span>
@@ -705,7 +713,9 @@
         }
       }
 
-      showMoodSelector();
+      // Auto-show a random dose on first load
+      activeMood = "All";
+      showRandomDose("All");
     }
 
     window.addEventListener("hashchange", applyRoute);
