@@ -4,7 +4,7 @@
 
 Short strings that shift your mental state — micro-doses for your brain, made of words.
 
-221 doses of warmth, wonder, cosmic awe, and gentle perspective shifts. No dread. No scary. No accounts. No tracking. No server.
+256 doses of warmth, wonder, cosmic awe, and gentle perspective shifts. No dread. No scary. No accounts. No tracking. No server.
 
 ## Examples
 
@@ -28,14 +28,14 @@ The entire thing is a single HTML file. No build step, no framework, no dependen
 
 | Category | Doses | Vibe |
 |----------|-------|------|
-| Warmth | 62 | Connection, comfort, quiet kindness |
-| Wonder | 65 | Everyday magic, reframed objects |
-| Cosmic | 47 | Stars, atoms, scale, deep time |
-| Gentle Shift | 47 | Perspective nudges, reframes |
+| Warmth | 69 | Connection, comfort, quiet kindness |
+| Wonder | 71 | Everyday magic, reframed objects |
+| Cosmic | 58 | Stars, atoms, scale, deep time |
+| Gentle Shift | 58 | Perspective nudges, reframes |
 
 ## Features
 
-- **Single HTML file** — ~58KB, everything inline (CSS, JS, 221 doses)
+- **Single HTML file** — ~58KB, everything inline (CSS, JS, 256 doses)
 - **Auto-advance** — loading bar fills over 8 seconds, then shows the next dose
 - **Smooth crossfades** — per-element opacity/transform transitions between doses
 - **Mood selector** — filter by Warmth, Wonder, Cosmic, Gentle Shift, or Surprise Me
