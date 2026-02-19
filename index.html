@@ -160,7 +160,6 @@
       text-align:center;
       max-width:600px;
       width:100%;
-      animation: fadeUp .35s ease both;
     }
     #dose-view.active{display:flex}
 
@@ -177,7 +176,10 @@
       font-weight:500;
       color: var(--c2);
       letter-spacing:.02em;
+      opacity:0;
+      transition: opacity .4s ease;
     }
+    .dose-for.visible{opacity:1}
     .dose-text{
       margin:0;
       font-size:26px;
@@ -185,6 +187,13 @@
       letter-spacing:-.02em;
       line-height:1.25;
       max-width:560px;
+      opacity:0;
+      transform:translateY(8px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .dose-text.visible{
+      opacity:1;
+      transform:translateY(0);
     }
     @media(min-width:600px){
       .dose-text{font-size:32px}
@@ -196,7 +205,10 @@
       flex-wrap:wrap;
       justify-content:center;
       align-items:center;
+      opacity:0;
+      transition: opacity .5s ease .15s;
     }
+    .dose-meta.visible{opacity:1}
     .tag{
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.16);
@@ -648,19 +660,54 @@
       showDose(pick);
     }
 
+    let isTransitioning = false;
+
     function showDose(dose){
       screen = "dose";
       currentDose = dose;
       lastDoseId = dose.id;
 
+      const wasActive = $doseView.classList.contains("active");
+
       $moodSelect.style.display = "none";
       $doseView.classList.add("active");
 
-      // Re-trigger animation
-      $doseView.style.animation = "none";
-      $doseView.offsetHeight;
-      $doseView.style.animation = "";
+      if(!wasActive){
+        // First dose — just appear
+        populateDose(dose);
+        requestAnimationFrame(() => {
+          $doseText.classList.add("visible");
+          $doseMeta.classList.add("visible");
+          if(forName) $doseFor.classList.add("visible");
+        });
+      } else {
+        // Crossfade: fade out, swap, fade in
+        isTransitioning = true;
+        $doseText.classList.remove("visible");
+        $doseMeta.classList.remove("visible");
+        $doseFor.classList.remove("visible");
 
+        setTimeout(() => {
+          populateDose(dose);
+          requestAnimationFrame(() => {
+            $doseText.classList.add("visible");
+            $doseMeta.classList.add("visible");
+            if(forName) $doseFor.classList.add("visible");
+            isTransitioning = false;
+          });
+        }, 300);
+      }
+
+      dosesDeep++;
+      const isMilestone = dosesDeep % 10 === 0;
+      $doseDepth.textContent = dosesDeep === 1 ? "1 dose deep" : `${dosesDeep} doses deep`;
+      $doseDepth.classList.toggle("milestone", isMilestone);
+
+      setHash(`/dose/${dose.id}`);
+      startAutoTimer();
+    }
+
+    function populateDose(dose){
       if(forName){
         $doseFor.textContent = `${forName}, this one\u2019s for you`;
         $doseFor.hidden = false;
@@ -675,14 +722,6 @@
         ...(dose.tags||[]).slice(0,3).map(t=>`<span class="tag">${escapeHTML(t)}</span>`)
       ].join("");
       $doseMeta.innerHTML = tagBits;
-
-      dosesDeep++;
-      const isMilestone = dosesDeep % 10 === 0;
-      $doseDepth.textContent = dosesDeep === 1 ? "1 dose deep" : `${dosesDeep} doses deep`;
-      $doseDepth.classList.toggle("milestone", isMilestone);
-
-      setHash(`/dose/${dose.id}`);
-      startAutoTimer();
     }
 
     function selectMood(mood){
