@@ -242,6 +242,20 @@
       background: linear-gradient(90deg, rgba(0,212,255,.20), rgba(122,238,255,.10));
       border-color: rgba(0,212,255,.28);
       box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn.primary .fill{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(0,212,255,.25), rgba(122,238,255,.18));
+      transform-origin: left;
+      transform: scaleX(0);
+      pointer-events:none;
+    }
+    .btn.primary .fill.running{
+      transform: scaleX(1);
+      transition: transform var(--timer-duration, 8s) linear;
     }
     .btn.good{
       background: linear-gradient(90deg, rgba(102,242,179,.18), rgba(0,212,255,.09));
@@ -346,7 +360,7 @@
       <p class="dose-text" id="doseText"></p>
       <div class="dose-meta" id="doseMeta"></div>
       <div class="dose-actions">
-        <button class="btn primary" id="nextBtn" type="button">Next</button>
+        <button class="btn primary" id="nextBtn" type="button"><span class="fill" id="nextFill"></span><span style="position:relative">Next</span></button>
         <button class="btn" id="copyBtn" type="button">Copy</button>
         <button class="btn good" id="shareBtn" type="button">Share</button>
         <button class="btn" id="doseBtn" type="button">Dose someone</button>
@@ -607,6 +621,7 @@
       screen = "mood";
       activeMood = null;
       currentDose = null;
+      stopAutoTimer();
       $moodSelect.style.display = "";
       $doseView.classList.remove("active");
       // Re-trigger animation
@@ -667,6 +682,7 @@
       $doseDepth.classList.toggle("milestone", isMilestone);
 
       setHash(`/dose/${dose.id}`);
+      startAutoTimer();
     }
 
     function selectMood(mood){
@@ -706,6 +722,25 @@
       const url = `${base}#/for/${encodeURIComponent(clean)}/${currentDose.id}`;
       copyToClipboard(url);
       toast("Link copied — send it!");
+    }
+
+    /* Auto-advance timer */
+    const TIMER_DURATION = 8000;
+    const $nextFill = document.getElementById("nextFill");
+    let autoTimer = null;
+
+    function startAutoTimer(){
+      clearTimeout(autoTimer);
+      $nextFill.classList.remove("running");
+      $nextFill.offsetHeight; // force reflow
+      $nextFill.style.setProperty("--timer-duration", TIMER_DURATION + "ms");
+      $nextFill.classList.add("running");
+      autoTimer = setTimeout(nextDose, TIMER_DURATION);
+    }
+
+    function stopAutoTimer(){
+      clearTimeout(autoTimer);
+      $nextFill.classList.remove("running");
     }
 
     /* Event wiring */
