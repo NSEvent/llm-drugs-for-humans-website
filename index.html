@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Small Spells — LLM Drugs for Humans</title>
+  <title>LLM Drugs (for Humans)</title>
   <meta name="description" content="A curated, good-vibes-only collection of micro-texts engineered for wonder, warmth, and gentle perspective shifts. Static site. No server." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Small Spells — LLM Drugs for Humans" />
+  <meta property="og:title" content="LLM Drugs (for Humans)" />
   <meta property="og:description" content="Micro-texts designed to create outsized wonder + warmth. No dread. Static site." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="og.png" />
@@ -344,9 +344,9 @@
     <a class="brand" href="#/" title="Home">
       <div class="logo" aria-hidden="true"></div>
       <div class="brand-text">
-        <span class="brand-name">Small Spells</span>
+        <span class="brand-name">LLM Drugs</span>
         <span class="brand-sep">/</span>
-        <span class="brand-sub">LLM Drugs for Humans</span>
+        <span class="brand-sub">for Humans</span>
       </div>
     </a>
   </header>
@@ -799,7 +799,7 @@
       const isWeb = location.protocol.startsWith("http");
 
       if(navigator.share){
-        const payload = { title:"Small Spells", text };
+        const payload = { title:"LLM Drugs", text };
         if(isWeb) payload.url = location.href;
         navigator.share(payload)
           .then(()=> toast("Shared"))
