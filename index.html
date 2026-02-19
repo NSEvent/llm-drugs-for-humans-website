@@ -805,8 +805,9 @@
       if(e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
 
       if(screen === "dose"){
-        if(e.key === " " || e.key === "ArrowRight" || e.key.toLowerCase() === "n"){
+        if(e.key === " " || e.key === "Enter" || e.key === "ArrowRight" || e.key.toLowerCase() === "n"){
           e.preventDefault();
+          if(document.activeElement) document.activeElement.blur();
           nextDose();
           return;
         }
