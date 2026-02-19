@@ -4,14 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LLM Drugs (for Humans)</title>
-  <meta name="description" content="A curated, good-vibes-only collection of micro-texts engineered for wonder, warmth, and gentle perspective shifts. Static site. No server." />
+  <meta name="description" content="State-shifting micro-texts. 221 doses of warmth, wonder, and gentle perspective shifts. Single HTML file. No server. Only the good trips." />
 
   <!-- Open Graph -->
   <meta property="og:title" content="LLM Drugs (for Humans)" />
-  <meta property="og:description" content="Micro-texts designed to create outsized wonder + warmth. No dread. Static site." />
+  <meta property="og:description" content="State-shifting micro-texts. 221 doses. Single HTML file. No server. Only the good trips." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="og.png" />
+  <meta property="og:url" content="https://llmdrugs.com" />
+  <meta property="og:image" content="https://llmdrugs.com/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LLM Drugs (for Humans)" />
+  <meta name="twitter:description" content="State-shifting micro-texts. 221 doses. Single HTML file. Only the good trips." />
+  <meta name="twitter:image" content="https://llmdrugs.com/og.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%2300D4FF' stop-opacity='.8'/><stop offset='100%25' stop-color='%2366F2B3' stop-opacity='.7'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='%23070A10'/><circle cx='50' cy='50' r='28' fill='url(%23g)' opacity='.6'/><circle cx='42' cy='42' r='12' fill='white' opacity='.25'/></svg>" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +73,7 @@
     .wrap{
       max-width:680px;
       margin:0 auto;
-      padding:0 20px;
+      padding:0 20px 80px;
       min-height:100vh;
       display:flex;
       flex-direction:column;
@@ -310,6 +317,34 @@
       .kbd-hints{display:none}
     }
 
+    /* ── Footer ── */
+    .site-footer{
+      position:fixed;
+      bottom:0; left:0; right:0;
+      padding:14px 20px;
+      text-align:center;
+      z-index:5;
+    }
+    .footer-about{
+      font-size:12px;
+      color: rgba(234,240,255,.35);
+      margin:0 0 8px;
+      line-height:1.5;
+    }
+    .footer-links{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .footer-links a{
+      font-family: var(--mono);
+      font-size:11px;
+      color: rgba(234,240,255,.4);
+      transition: color .15s ease;
+    }
+    .footer-links a:hover{color: var(--c2)}
+
     .toast{
       position:fixed;
       left:50%;
@@ -374,7 +409,10 @@
       <div class="dose-actions">
         <button class="btn primary" id="nextBtn" type="button"><span class="fill" id="nextFill"></span><span style="position:relative">Next</span></button>
         <button class="btn" id="copyBtn" type="button">Copy</button>
+      </div>
+      <div class="dose-actions">
         <button class="btn good" id="shareBtn" type="button">Share</button>
+        <button class="btn" id="tweetBtn" type="button">Post on 𝕏</button>
         <button class="btn" id="doseBtn" type="button">Dose someone</button>
       </div>
       <button class="change-mood" id="changeMoodBtn" type="button">Pick a mood</button>
@@ -386,6 +424,19 @@
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p class="footer-about">State-shifting micro-texts. 221 doses. Single HTML file. Only the good trips.</p>
+    <div class="footer-links">
+      <a href="https://github.com/NSEvent/llm-drugs-for-humans-website" target="_blank" rel="noopener">Source</a>
+      <a href="https://kevintang.xyz" target="_blank" rel="noopener">kevintang.xyz</a>
+      <a href="https://kevin.md" target="_blank" rel="noopener">Blog</a>
+      <a href="https://x.com/_KevinTang" target="_blank" rel="noopener">𝕏</a>
+      <a href="https://github.com/NSEvent" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://buymeacoffee.com/kevintang" target="_blank" rel="noopener">Buy me a coffee</a>
+    </div>
+  </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -810,6 +861,13 @@
       copyToClipboard(isWeb ? `${text}\n${location.href}` : text);
     }
 
+    function tweetDose(){
+      if(!currentDose) return;
+      const text = `\u201C${currentDose.text}\u201D\n\nllmdrugs.com`;
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
     function doseSomeone(){
       if(!currentDose) return;
       const name = prompt("Who's this dose for?");
@@ -850,6 +908,7 @@
       if(currentDose) copyToClipboard(currentDose.text);
     });
     document.getElementById("shareBtn").addEventListener("click", shareDose);
+    document.getElementById("tweetBtn").addEventListener("click", tweetDose);
     document.getElementById("doseBtn").addEventListener("click", doseSomeone);
     document.getElementById("changeMoodBtn").addEventListener("click", showMoodSelector);
 
